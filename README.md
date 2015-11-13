@@ -1,6 +1,6 @@
 # UserScripts
 User scripts for GreaseMonkey.
-I use these scripts for to improve website usability on Firefox.
+I use these scripts to improve website usability on Firefox.
 
 ### Available scripts
 * comment_collapser.js - Adds anchors to HackerNews comments to collapse and expand the comment groups.
