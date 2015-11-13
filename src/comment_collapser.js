@@ -100,8 +100,12 @@ var $hn_collapsing = {
 
     addCollapser: function (context, commentNode) {
         var collapser = context.createCollapser();
-
-        var voteAnchorNode = commentNode.getElementsByClassName("votearrow")[0].parentNode;
+        
+        var voteArrowNodes = commentNode.getElementsByClassName("votearrow");
+        if (voteArrowNodes.length > 0)
+            var voteAnchorNode =  voteArrowNodes[0].parentNode;
+        else
+            var voteAnchorNode = commentNode.querySelector('.votelinks').querySelector('img');
         voteAnchorNode.parentNode.insertBefore(collapser, voteAnchorNode);
     },
 
