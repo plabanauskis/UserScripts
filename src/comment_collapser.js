@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        HackerNews Comment Collapsing
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.1
+// @version     0.11
 // @include     http://news.ycombinator.com/*
 // @include     https://news.ycombinator.com/*
 // @grant       none
