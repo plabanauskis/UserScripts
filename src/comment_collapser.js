@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        HackerNews Comment Collapsing
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.11
+// @version     0.12
 // @include     http://news.ycombinator.com/*
 // @include     https://news.ycombinator.com/*
 // @grant       none
@@ -111,8 +111,10 @@ var $hn_collapsing = {
 
     init: function (context) {
         var comments = document.getElementsByClassName("athing");
+        comments = Array.prototype.slice.call(comments, 0);
+        comments.splice(0, 1);
 
-        Array.prototype.forEach.call(comments, function (c) {
+        comments.forEach(function (c) {
             context.addCollapser(context, c);
         });
     }
