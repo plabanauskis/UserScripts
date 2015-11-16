@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        HackerNews Comment Collapsing
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.2
+// @version     0.21
 // @include     http://news.ycombinator.com/*
 // @include     https://news.ycombinator.com/*
 // @grant       none
@@ -16,7 +16,8 @@ var $hn_collapsing = {
             commentNode.userNode.style.marginBottom = "-10px";
             
             childrenNodes.forEach(function(c) {
-                c.commentNode.style.display = "";
+                if (c.collapsedBy === commentNode)
+                    c.commentNode.style.display = "";
             });
 
             collapserNode.textContent = "[-]";
@@ -32,7 +33,10 @@ var $hn_collapsing = {
             commentNode.userNode.style.marginBottom = "10px";
             
             childrenNodes.forEach(function(c) {
-                c.commentNode.style.display = "none";
+                if (c.commentNode.style.display !== "none") {
+                    c.commentNode.style.display = "none";
+                    c.collapsedBy = commentNode;
+                }
             });
 
             collapserNode.textContent = "[+]";
