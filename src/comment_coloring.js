@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        HackerNews Comment Coloring
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.2
+// @version     0.21
 // @include     http://news.ycombinator.com/*
 // @include     https://news.ycombinator.com/*
 // @grant       none
@@ -14,7 +14,7 @@
     const BASE_INDENT_PX = 40;
     
     function getCommentIndentations() {
-        var things = Array.prototype.slice.call(document.getElementsByClassName('athing'), 1);
+        var things = Array.prototype.slice.call(document.querySelectorAll('.athing'), 1);
         var indentations = Array.prototype.map.call(things, function(currentValue) {
             var indentation = currentValue.querySelector('.ind > img').width / BASE_INDENT_PX;
             return {
