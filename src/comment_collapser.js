@@ -8,6 +8,8 @@
 // ==/UserScript==
 
 (function () {
+    'use strict';
+    
     const COLLAPSER_COLLAPSED = '[+]';
     const COLLAPSER_EXPANDED = '[-]';
     
