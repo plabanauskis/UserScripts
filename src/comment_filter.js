@@ -21,6 +21,14 @@
                 });
             return filtered;
         };
+        this.style = createFilterStyle();
+        
+        function createFilterStyle() {
+            var styleElement = document.createElement('style');
+            styleElement.type = 'text/css';
+            styleElement.innerHTML = '.filtered-out { display: none }';
+            return styleElement;
+        }
         
         var prototype = Object.getPrototypeOf(this);        
         var onInput = function(value) {
