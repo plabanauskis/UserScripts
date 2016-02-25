@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        HackerNews Comment Filtering
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.2
-// @include     http://news.ycombinator.com/*
-// @include     https://news.ycombinator.com/*
+// @version     0.21
+// @include     http://news.ycombinator.com/item*
+// @include     https://news.ycombinator.com/item*
 // @grant       none
 // ==/UserScript==
 
