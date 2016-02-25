@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        HackerNews Comment Filtering
 // @namespace   https://github.com/PauliusLabanauskis
-// @version     0.1
+// @version     0.2
 // @include     http://news.ycombinator.com/*
 // @include     https://news.ycombinator.com/*
 // @grant       none
@@ -12,16 +12,30 @@
     
     function Filter(currentDocument) {
         this.currentDocument = currentDocument;
-        this.filterComments = function(text) {
+        this.filterComments = function(search) {
             var matchingComments = [];
             var nonMatchingComments = [];
             
-            this.currentDocument.comments.forEach(function(comment) {
+            function isMatchText(fullText, searchText) {
+                return fullText != null && fullText.indexOf(searchText) !== -1;
+            }
+            
+            function isMatchRegex(fullText, regex) {
+                return fullText.search(regex) !== -1;
+            }
+            
+            var isMatch = isMatchText;
+            if (search.length > 2 && search[0] === '/' && search[search.length-1] === '/') {
+                search = search.slice(1, search.length-1)
+                isMatch = isMatchRegex;
+            }
+            
+            this.currentDocument.comments.forEach(function(comment) {                
                 var commentText = comment.getText();
-                if (commentText == null || commentText.indexOf(text) === -1)
-                    nonMatchingComments.push(comment);
-                else
+                if (isMatch(commentText, search))
                     matchingComments.push(comment);
+                else
+                    nonMatchingComments.push(comment);
             });
             return {
                 matching: matchingComments,
