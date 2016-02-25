@@ -17,3 +17,17 @@ Comment collapser adds anchors to HackerNews comments to collapse and expand the
 Comment coloring script adds a lighter shade of color to alternating comments in HackerNews. Helps with readability and distinguishing the hierarchy of comments.
 
 ![Comment Coloring](https://raw.githubusercontent.com/PauliusLabanauskis/UserScripts/master/img/coloring.jpg)
+
+## How to use
+
+### Supported browsers
+* Firefox w/ Greasemonkey extension;
+* Chrome w/ Tampermonkey extension;
+
+### Installation
+Enter or click on any of the following URLs:
+* [comment_collapser.user.js](https://raw.githubusercontent.com/PauliusLabanauskis/UserScripts/master/src/comment_collapser.user.js)
+* [comment_filter.user.js](https://raw.githubusercontent.com/PauliusLabanauskis/UserScripts/master/src/comment_filter.user.js)
+* [comment_coloring.user.js](https://raw.githubusercontent.com/PauliusLabanauskis/UserScripts/master/src/comment_coloring.user.js)
+
+The browser extension will ask for confirmation to install the scripts. After confirmation the scripts will be ready to use.
