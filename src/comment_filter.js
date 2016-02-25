@@ -12,28 +12,37 @@
     
     function Filter(currentDocument) {
         this.currentDocument = currentDocument;
-        this.discoverNonMatchingComments = function(text) {
-            var filtered = this.currentDocument.comments.filter(
-                function(comment) {
-                    var commentText = comment.getText();
-                    return commentText == null ?
-                        false : comment.getText().indexOf(text) === -1;
-                });
-            return filtered;
+        this.filterComments = function(text) {
+            var matchingComments = [];
+            var nonMatchingComments = [];
+            
+            this.currentDocument.comments.forEach(function(comment) {
+                var commentText = comment.getText();
+                if (commentText == null || commentText.indexOf(text) === -1)
+                    nonMatchingComments.push(comment);
+                else
+                    matchingComments.push(comment);
+            });
+            return {
+                matching: matchingComments,
+                nonMatching: nonMatchingComments
+                };
         };
         this.style = createFilterStyle();
+        this.currentDocument.appendElement(this.style);
         
         function createFilterStyle() {
             var styleElement = document.createElement('style');
             styleElement.type = 'text/css';
-            styleElement.innerHTML = '.filtered-out { display: none }';
+            styleElement.innerHTML = '.filtered-out { display: none; }';
             return styleElement;
         }
         
         var prototype = Object.getPrototypeOf(this);        
-        var onInput = function(value) {
-            var nonMatchingComments = this.discoverNonMatchingComments(value);
-            nonMatchingComments.forEach(function(comment) { comment.collapse() });
+        var onInput = function(searchText) {
+            var filteredComments = this.filterComments(searchText);
+            filteredComments.nonMatching.forEach(function(comment) { comment.hide(); });
+            filteredComments.matching.forEach(function(comment) { comment.display(); });
         }.bind(this);
         prototype.onInput = onInput;
     }
@@ -56,13 +65,23 @@
     function DOMComment(commentNodeDOM) {
         this.commentNodeDOM = commentNodeDOM;
         
+        function applyClass(element, className) {
+            if (!element.classList.contains(className))
+                element.classList.toggle(className);
+        }
+        
+        function removeClass(element, className) {
+            if (element.classList.contains(className))
+                element.classList.toggle(className);
+        }
+        
         var prototype = Object.getPrototypeOf(this);
-        prototype.collapse = function() { this.commentNodeDOM.style.display = 'none'; }
-        prototype.expand = function() { this.commentNodeDOM.style.display = '' };
+        prototype.hide = function() { applyClass(this.commentNodeDOM, 'filtered-out'); }
+        prototype.display = function() { removeClass(this.commentNodeDOM, 'filtered-out'); };
         prototype.getText = function() {
             var commentTextNode = this.commentNodeDOM.querySelector('.comment span');
             return commentTextNode == null ? null : commentTextNode.innerHTML;
-        }
+        };
     }
     
     function CurrentDocument() {
@@ -76,6 +95,9 @@
             var placement = document.querySelectorAll('td > .pagetop')[1];
             var anchor = placement.querySelector('a');
             placement.insertBefore(input, anchor);
+        };
+        prototype.appendElement = function(element) {
+            document.body.appendChild(element);
         }
     }
     
